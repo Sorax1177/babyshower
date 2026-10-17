@@ -300,57 +300,6 @@
             </div>
         </section>
 
-        <!-- RSVP / CONFIRMATION FORM -->
-        <section class="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-white space-y-6">
-            <div class="text-center space-y-2">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-xs uppercase tracking-wider">
-                    <i class="fa-solid fa-envelope-open-text"></i> RSVP
-                </div>
-                <h2 class="font-cursive text-4xl sm:text-5xl font-bold text-slate-800">
-                    Confirmar Asistencia
-                </h2>
-                <p class="text-slate-600 text-sm max-w-md mx-auto">
-                    Por favor confirma si nos acompañarás para preparar todo con mucho amor.
-                </p>
-            </div>
-
-            <form id="rsvp-form" onsubmit="handleRSVP(event)" class="max-w-xl mx-auto space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">Nombre Completo *</label>
-                        <input type="text" id="rsvp-name" required placeholder="Tu nombre" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">¿Asistirás? *</label>
-                        <select id="rsvp-attending" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
-                            <option value="Yes">¡Sí, ahí estaré! 🎉</option>
-                            <option value="No">Lo siento, no podré ir 😔</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">Número de Acompañantes</label>
-                        <input type="number" id="rsvp-guests" min="1" max="5" value="1" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">Teléfono (opcional)</label>
-                        <input type="tel" id="rsvp-phone" placeholder="Ej: 0414-1234567" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">Mensaje para los papás o para Oliver</label>
-                    <textarea id="rsvp-message" rows="2" placeholder="Déjanos unas palabras de cariño..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"></textarea>
-                </div>
-
-                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold rounded-2xl shadow-lg transition-transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-paper-plane"></i> Enviar Confirmación por WhatsApp
-                </button>
-            </form>
-        </section>
-
         <!-- LOCATION MAP SECTION -->
         <section id="location-section" class="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-white text-center space-y-4">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-100 text-indigo-700 font-semibold text-xs uppercase tracking-wider">
@@ -537,23 +486,6 @@
                             <span class="text-[11px] text-slate-400 font-medium">${gift.category}</span>
                         </div>
                     </div>
-
-                    <div class="pt-3 mt-3 border-t border-slate-100">
-                        ${reservas.length > 0 ? `
-                            <div class="text-xs bg-blue-50/80 p-2 rounded-xl border border-blue-100 mb-2">
-                                <span class="text-[10px] text-blue-800 font-bold block">
-                                    <i class="fa-solid fa-user-check text-blue-600"></i> Apartado por:
-                                </span>
-                                <p class="text-[11px] text-slate-600 font-semibold mt-0.5">${reservas.join(', ')}</p>
-                            </div>
-                        ` : ''}
-
-                        ${!estaAgotado ? `
-                            <button onclick="openReserveModal('${gift.id}')" class="w-full py-2 bg-blue-500 hover:bg-blue-600 active:scale-95 text-white font-bold rounded-xl text-xs transition-all shadow-sm flex items-center justify-center gap-1.5">
-                                <i class="fa-solid fa-bookmark"></i> Reservar Un Regalo
-                            </button>
-                        ` : ''}
-                    </div>
                 `;
 
                 grid.appendChild(card);
@@ -637,24 +569,6 @@
         function filterCategory(category) {
             currentCategoryFilter = category;
             renderRegistry();
-        }
-
-        // RSVP -> Redirección a WhatsApp
-        function handleRSVP(e) {
-            e.preventDefault();
-            const name = document.getElementById('rsvp-name').value.trim();
-            const attending = document.getElementById('rsvp-attending').value;
-            const guests = document.getElementById('rsvp-guests').value;
-            const phone = document.getElementById('rsvp-phone').value;
-            const message = document.getElementById('rsvp-message').value.trim();
-
-            const text = `¡Hola! Confirmo mi asistencia al Baby Shower de Oliver Orión.
-- Nombre: ${name}
-- ¿Asistirá?: ${attending === 'Yes' ? 'Sí 🎉' : 'No 😔'}
-- Acompañantes: ${guests}
-${message ? `- Mensaje: "${message}"` : ''}`;
-
-            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         // Temporizador
