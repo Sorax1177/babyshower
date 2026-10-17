@@ -486,6 +486,14 @@
                             <span class="text-[11px] text-slate-400 font-medium">${gift.category}</span>
                         </div>
                     </div>
+
+                    <div class="pt-3 mt-3 border-t border-slate-100">
+                        ${!estaAgotado ? `
+                            <button onclick="openReserveModal('${gift.id}')" class="w-full py-2 bg-blue-500 hover:bg-blue-600 active:scale-95 text-white font-bold rounded-xl text-xs transition-all shadow-sm flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-bookmark"></i> Reservar Un Regalo
+                            </button>
+                        ` : ''}
+                    </div>
                 `;
 
                 grid.appendChild(card);
